@@ -1,7 +1,7 @@
 class BlowsingTwitter
     require 'selenium-webdriver'
 
-    def initialize
+    def initialize(user, pass)
 
         @driver = Selenium::WebDriver.for :chrome
         @driver.manage.timeouts.implicit_wait = 60
@@ -10,10 +10,10 @@ class BlowsingTwitter
         @driver.navigate.to "https://twitter.com/login"
         # URLを指定してアクセス
         
-        @driver.find_element(:xpath, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div[2]/form/div/div[1]/label/div/div[2]/div/input').send_keys('user')
+        @driver.find_element(:xpath, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div[2]/form/div/div[1]/label/div/div[2]/div/input').send_keys(user)
         #user名入力
         
-        @driver.find_element(:xpath, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div[2]/form/div/div[2]/label/div/div[2]/div/input').send_keys('pass')
+        @driver.find_element(:xpath, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div[2]/form/div/div[2]/label/div/div[2]/div/input').send_keys(pass)
         #pass入力
         
         @driver.find_element(:xpath, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div[2]/form/div/div[3]/div').click
@@ -31,6 +31,11 @@ class BlowsingTwitter
         #送信ボタンクリック    
     end
     
+    def search(query)
+        query = URI.encode_www_form_component(query)
+        @driver.navigate.to "https://twitter.com/search?q="+query+"&src=typed_query&f=live"
+    end
+
     def finish
         @driver.quit
         # ドライバを閉じる

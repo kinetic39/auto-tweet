@@ -46,7 +46,7 @@ def gen_twi_time
 end
 
 #初期化
-bT = BlowsingTwitter.new
+bT = BlowsingTwitter.new("user", "pass")
 twi_time = gen_twi_time()
 
 loop do
