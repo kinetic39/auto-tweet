@@ -45,7 +45,7 @@ def gen_twi_time
     return {hour: hour, min: min}
 end
 
-    
+#初期化
 bT = BlowsingTwitter.new
 twi_time = gen_twi_time()
 
@@ -59,7 +59,7 @@ loop do
         p (t.to_s + "に" + msg + "をつぶやきました。")
 
     elsif t.hour == 12 && t.min == 0
-        #翌日の時刻を決定
+        #翌日のつぶやく時刻を決定
         twi_time = gen_twi_time()      
     end
 
