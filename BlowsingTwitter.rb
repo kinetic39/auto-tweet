@@ -33,7 +33,10 @@ class BlowsingTwitter
     
     def search(query)
         query = URI.encode_www_form_component(query)
+        #パーセントエンコーディング
+
         @driver.navigate.to "https://twitter.com/search?q="+query+"&src=typed_query&f=live"
+        #検索
     end
 
     def finish
