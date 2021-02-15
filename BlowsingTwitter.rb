@@ -32,16 +32,24 @@ class BlowsingTwitter
         @driver.find_element(:xpath, '//*[@id="layers"]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div[3]/div/div/div/div[1]/div/div/div/div/div[2]/div[4]/div/div/div[2]/div[4]').click
     end
     
-    def search(query)
+    def search(query, only_following = false)
         #パーセントエンコーディング
         query = URI.encode_www_form_component(query)
 
+        #url 
+        url = "https://twitter.com/search?q="+query+"&src=typed_query&f=live"
+
+        #following限定検索か？
+        if only_following
+            url += "&pf=on"
+        end
+
         #検索
-        @driver.navigate.to "https://twitter.com/search?q="+query+"&src=typed_query&f=live"
+        @driver.navigate.to url
     end
 
-    def fav_some_tweets(query)
-        search(query)
+    def fav_some_tweets(query, only_following = false)
+        search(query, only_following)
 
         # 現在位置＋5000pxに縦スクロール
         @driver.execute_script(%Q{window.scroll(0,window.scrollY + 5000);})
