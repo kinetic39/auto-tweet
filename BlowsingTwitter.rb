@@ -46,6 +46,13 @@ class BlowsingTwitter
 
         #検索
         @driver.navigate.to url
+
+        #5秒待つ
+        sleep 5
+
+        #更新する
+        @driver.navigate.refresh
+
     end
 
     def fav_some_tweets(query, only_following = false)
