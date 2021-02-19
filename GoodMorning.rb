@@ -1,5 +1,12 @@
+
 require_relative "BlowsingTwitter"
 
+#
+# 朝の挨拶フレーズを生成する関数
+# 配列morning_msgの中から１つ適当なフレーズと語尾を付けます。
+#
+# @return [Strings] 朝の挨拶フレーズ
+#
 def get_morning_msg
 
     morning_msgs = ["グッドモーニング", "オハヨーハヨー", "おはようございます"]
@@ -26,6 +33,11 @@ def get_morning_msg
 
 end
 
+#
+# 7:39～9:39内の時刻を1つランダムに決めます。
+#
+# @return 時刻の連想配列。:hourが時， :minが分
+#
 def gen_twi_time
     #8時台か9時台か？
     hour = Random.rand(2) + 8
@@ -40,7 +52,7 @@ def gen_twi_time
         min = Random.rand(40)
     end
 
-    p "次の日は"+hour.to_s+":"+min.to_s+"につぶやきます。"
+    p hour.to_s+":"+min.to_s+"に決定。"
 
     return {hour: hour, min: min}
 end
