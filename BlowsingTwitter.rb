@@ -86,8 +86,13 @@ class BlowsingTwitter
     # @param [Boolean] only_following フォロー中アカウントのつぶやきに限定して検索するか（デフォルトはfalse）
     #
     def fav_some_tweets(query, only_following = false)
-
+        
         search(query, only_following)
+        
+        #5秒待つ
+        sleep 5
+
+        num_of_tweets = @driver.find_elements(:xpath, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/div[2]/div/div/section/div/div/div').size
 
         num_of_tweets.times do |i|
             begin
