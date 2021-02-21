@@ -29,6 +29,9 @@ class BlowsingTwitter
         
         #loginボタンクリック
         @driver.find_element(:xpath, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div[2]/form/div/div[3]/div').click
+
+        #ページ読み込み待ち3秒
+        sleep 3
     end
 
     #
@@ -73,8 +76,6 @@ class BlowsingTwitter
         #5秒待つ
         sleep 5
         
-        #更新する
-        @driver.navigate.refresh
         
     end
     
@@ -88,25 +89,18 @@ class BlowsingTwitter
 
         search(query, only_following)
 
-        # 現在位置＋5000pxに縦スクロール
-        @driver.execute_script(%Q{window.scroll(0,window.scrollY + 5000);})
+        num_of_tweets.times do |i|
+            begin
+                fav_btn = @driver.find_element(:xpath, ('//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/div[2]/div/div/section/div/div/div[' + (i+1).to_s + ']/div/div/article/div/div/div/div[2]/div[2]/div[2]/div[3]/div[3]/div'))
+                if fav_btn.attribute('data-testid') == 'like'
+                    fav_btn.click
+                end                
+            rescue => exception
+                puts exception
+                puts (i+1).to_s + '番目でエラー'
+            end
+        end
 
-        #5秒後に画面内の未ふぁぼツイートにふぁぼする
-        @driver.execute_script(%Q{
-            setTimeout(
-                function () {
-                    // いいね！の要素を取得
-                    var elems = document.body.querySelectorAll('div[data-testid="like"]');
-            
-                    // 取得できたいいね！の要素の回数分実行
-                    for (var i = 0; i < elems.length; i++) {
-            
-                        // いいね！ボタンをクリック
-                        elems[i].click();
-                    }         
-                }
-            , 5000);
-        })
     end
 
     #
